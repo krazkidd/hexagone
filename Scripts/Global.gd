@@ -3,7 +3,8 @@ extends Node
 var Font : Font = load("res://Fonts/LibreBaskerville_DynamicFont.tres")
 
 enum TileColor {
-    Red = 0,
+    Red,
+    Magenta,
     Yellow,
     Green,
     Blue,
@@ -21,11 +22,18 @@ enum Dir {
 }
 
 enum SpinDir {
-    Clockwise = 0,
+    Clockwise,
     AntiClockwise
 }
 
+enum TileType {
+    Normal,
+    Flower,
+    Pearl
+}
+
 const Red : Color = Color("#dc322f")
+const Magenta : Color = Color("#d33682")
 const Yellow : Color = Color("#b58900")
 const Green : Color = Color("#859900")
 const Blue : Color = Color("#6c71c4")
@@ -53,6 +61,8 @@ func get_color(tileColor):
     match tileColor:
         TileColor.Red:
             return Red
+        TileColor.Magenta:
+            return Magenta
         TileColor.Yellow:
             return Yellow
         TileColor.Green:

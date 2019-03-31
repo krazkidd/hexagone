@@ -2,10 +2,7 @@ extends Node2D
 
 class_name Board
 
-# selected/cursor tiles
-var Tile1 : Tile
-var Tile2 : Tile
-var Tile3 : Tile
+var cursorTiles : Array = []
 
 var Board : Array = []
 
@@ -33,7 +30,7 @@ func _ready():
                 tile.x = x
                 tile.y = y
 
-                tile.set_color(Global.get_color(randi() % 5))
+                tile.set_color(Global.get_color(randi() % 6))
 
                 # position is relative to other tiles on the board
                 # and will be transformed according to the board's transform
@@ -42,13 +39,9 @@ func _ready():
                 print(String(tile.id) + ": " + String(tile.position))
 
                 # add to scene tree
-                $Tiles.add_child(tile)
+                add_child(tile)
 
             Board[x][y] = tile
-
-    Tile1 = Board[0][0]
-    Tile2 = Board[1][0]
-    Tile3 = Board[1][1]
 
 
 func _input(event):
@@ -60,39 +53,39 @@ func _input(event):
 
 
 func spin(spinDir):
-    var dir = Tile1.find_neighbor(Tile2)
-
-    match dir:
-        Global.Dir.UpLeft:
-            if Tile1.get_neighbor(Global.Dir.DownLeft) == Tile3:
-                _spin(Tile1, Tile2, Tile3, spinDir)
-            else:
-                _spin(Tile1, Tile3, Tile2, spinDir)
-        Global.Dir.Up:
-            if Tile1.get_neighbor(Global.Dir.UpLeft) == Tile3:
-                _spin(Tile1, Tile2, Tile3, spinDir)
-            else:
-                _spin(Tile1, Tile3, Tile2, spinDir)
-        Global.Dir.UpRight:
-            if Tile1.get_neighbor(Global.Dir.Up) == Tile3:
-                _spin(Tile1, Tile2, Tile3, spinDir)
-            else:
-                _spin(Tile1, Tile3, Tile2, spinDir)
-        Global.Dir.DownRight:
-            if Tile1.get_neighbor(Global.Dir.UpRight) == Tile3:
-                _spin(Tile1, Tile2, Tile3, spinDir)
-            else:
-                _spin(Tile1, Tile3, Tile2, spinDir)
-        Global.Dir.Down:
-            if Tile1.get_neighbor(Global.Dir.DownRight) == Tile3:
-                _spin(Tile1, Tile2, Tile3, spinDir)
-            else:
-                _spin(Tile1, Tile3, Tile2, spinDir)
-        Global.Dir.DownLeft:
-            if Tile1.get_neighbor(Global.Dir.Down) == Tile3:
-                _spin(Tile1, Tile2, Tile3, spinDir)
-            else:
-                _spin(Tile1, Tile3, Tile2, spinDir)
+#    var dir = Tile1.find_neighbor(Tile2)
+#
+#    match dir:
+#        Global.Dir.UpLeft:
+#            if Tile1.get_neighbor(Global.Dir.DownLeft) == Tile3:
+#                _spin(Tile1, Tile2, Tile3, spinDir)
+#            else:
+#                _spin(Tile1, Tile3, Tile2, spinDir)
+#        Global.Dir.Up:
+#            if Tile1.get_neighbor(Global.Dir.UpLeft) == Tile3:
+#                _spin(Tile1, Tile2, Tile3, spinDir)
+#            else:
+#                _spin(Tile1, Tile3, Tile2, spinDir)
+#        Global.Dir.UpRight:
+#            if Tile1.get_neighbor(Global.Dir.Up) == Tile3:
+#                _spin(Tile1, Tile2, Tile3, spinDir)
+#            else:
+#                _spin(Tile1, Tile3, Tile2, spinDir)
+#        Global.Dir.DownRight:
+#            if Tile1.get_neighbor(Global.Dir.UpRight) == Tile3:
+#                _spin(Tile1, Tile2, Tile3, spinDir)
+#            else:
+#                _spin(Tile1, Tile3, Tile2, spinDir)
+#        Global.Dir.Down:
+#            if Tile1.get_neighbor(Global.Dir.DownRight) == Tile3:
+#                _spin(Tile1, Tile2, Tile3, spinDir)
+#            else:
+#                _spin(Tile1, Tile3, Tile2, spinDir)
+#        Global.Dir.DownLeft:
+#            if Tile1.get_neighbor(Global.Dir.Down) == Tile3:
+#                _spin(Tile1, Tile2, Tile3, spinDir)
+#            else:
+#                _spin(Tile1, Tile3, Tile2, spinDir)
 
     #TODO we will need to check more than once when we implement "dropping" tiles
     _check_board()
@@ -109,42 +102,6 @@ func _spin(tile1 : Tile, tile2 : Tile, tile3 : Tile, spinDir):
         tile1.set_color(tile3.color)
         tile3.set_color(tile2.color)
         tile2.set_color(tile1Color)
-
-func cursor_update(tile : Tile):
-    # don't bother unless it's a new tile
-    if tile != Tile1 and tile != Tile2 and tile != Tile3:
-        if not tile.is_neighbor(Tile1):
-            Tile1 = tile
-        elif not tile.is_neighbor(Tile2):
-            Tile2 = Tile1
-            Tile1 = tile
-        else:
-            Tile3 = Tile1
-            Tile1 = tile
-
-        print(String(tile.id) + ": " + String(tile.x) + ", " + String(tile.y))
-
-        _snug_up()
-
-        $Cursor/Hexagon1.global_position = Tile1.global_position
-        $Cursor/Hexagon2.global_position = Tile2.global_position
-        $Cursor/Hexagon3.global_position = Tile3.global_position
-
-
-#
-# Tighten up the cursor tiles so they are all neighbors of each other.
-#
-func _snug_up():
-    var isNeighbor2 : bool = Tile1.is_neighbor(Tile2)
-    var isNeighbor3 : bool = Tile1.is_neighbor(Tile3)
-
-    if not isNeighbor2 and not isNeighbor3:
-        Tile2 = Tile1.get_first_neighbor()
-        Tile3 = Tile1.get_mutual_neighbor(Tile2)
-    elif not isNeighbor2:
-        Tile2 = Tile1.get_mutual_neighbor(Tile3)
-    elif not isNeighbor3:
-        Tile3 = Tile1.get_mutual_neighbor(Tile2)
 
 
 func _check_board():
@@ -173,3 +130,14 @@ func _check_board():
         tile.get_neighbor(Global.Dir.DownLeft).safe_free()
         tile.get_neighbor(Global.Dir.Down).safe_free()
         tile.get_neighbor(Global.Dir.DownRight).safe_free()
+
+
+func add_cursor(tile : Tile):
+    cursorTiles.append(tile)
+
+
+func clear_cursor():
+    for tile in cursorTiles:
+        tile.isCursor = false
+
+    cursorTiles.clear()

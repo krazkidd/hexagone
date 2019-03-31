@@ -9,10 +9,22 @@ var y : int
 
 var color : Color setget set_color
 
+var type
+
+var isCursor : bool = false setget set_is_cursor
+
 
 func set_color(value : Color):
     color = value
-    ($Polygon2D as Polygon2D).color = value
+    ($Face as Polygon2D).color = value
+
+
+func set_is_cursor(value : bool):
+    isCursor = value
+    ($Back as Polygon2D).visible = value
+
+    if value:
+        Global.Board.add_cursor(self)
 
 
 func get_neighbor(dir) -> Tile:
@@ -171,7 +183,16 @@ func is_flower() -> bool:
 
 
 func _on_MouseArea_mouse_entered():
-    Global.Board.cursor_update(self)
+
+    set_is_cursor(type != Global.TileType.Flower)
+
+    match type:
+        Global.TileType.Normal:
+            pass
+        Global.TileType.Flower:
+            pass
+        Global.TileType.Pearl:
+            pass
 
 
 func safe_free():
