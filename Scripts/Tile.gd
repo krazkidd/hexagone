@@ -7,24 +7,31 @@ var id : int
 var x : int
 var y : int
 
-var color : Color setget set_color
-
 var type
 
-var isCursor : bool = false setget set_is_cursor
+var color : Color setget ,get_color
+var isCursor : bool setget set_is_cursor,get_is_cursor
+
+onready var _face : Polygon2D = $Face
+onready var _back : Polygon2D = $Back
 
 
-func set_color(value : Color):
-    color = value
-    ($Face as Polygon2D).color = value
+func get_color() -> Color:
+    return _face.color
 
 
 func set_is_cursor(value : bool):
-    isCursor = value
-    ($Back as Polygon2D).visible = value
+    _back.visible = value
 
-    if value:
-        Global.Board.add_cursor(self)
+
+func get_is_cursor() -> bool:
+    return _back.visible
+
+
+func _ready():
+    type = Global.TileType.Normal
+
+    _face.color = Global.get_color(randi() % 6)
 
 
 func get_neighbor(dir) -> Tile:
@@ -183,16 +190,167 @@ func is_flower() -> bool:
 
 
 func _on_MouseArea_mouse_entered():
+    Global.Board.cursorTile = self
 
-    set_is_cursor(type != Global.TileType.Flower)
+    set_is_cursor(true)
 
-    match type:
-        Global.TileType.Normal:
-            pass
-        Global.TileType.Flower:
-            pass
-        Global.TileType.Pearl:
-            pass
+    set_cursor_neighbors()
+
+
+func set_cursor_neighbors():
+    var pos : Vector2 = get_viewport().get_mouse_position()
+
+    var nearest1 : Tile = get_first_neighbor()
+    var nearest2 : Tile = null
+
+    var tile : Tile
+
+    tile = get_neighbor(Global.Dir.Up)
+    if tile != null:
+        if (tile.global_position - pos).length() < (nearest1.global_position - pos).length():
+            nearest1 = tile
+
+    tile = get_neighbor(Global.Dir.UpRight)
+    if tile != null:
+        if (tile.global_position - pos).length() < (nearest1.global_position - pos).length():
+            nearest1 = tile
+
+    tile = get_neighbor(Global.Dir.DownRight)
+    if tile != null:
+        if (tile.global_position - pos).length() < (nearest1.global_position - pos).length():
+            nearest1 = tile
+
+    tile = get_neighbor(Global.Dir.Down)
+    if tile != null:
+        if (tile.global_position - pos).length() < (nearest1.global_position - pos).length():
+            nearest1 = tile
+
+    tile = get_neighbor(Global.Dir.DownLeft)
+    if tile != null:
+        if (tile.global_position - pos).length() < (nearest1.global_position - pos).length():
+            nearest1 = tile
+
+    tile = get_neighbor(Global.Dir.UpLeft)
+    if tile != null:
+        if (tile.global_position - pos).length() < (nearest1.global_position - pos).length():
+            nearest1 = tile
+
+    #######################################################
+
+    nearest2 = get_mutual_neighbor(nearest1)
+
+    tile = get_neighbor(Global.Dir.Up)
+    if tile != null and tile != nearest1 and nearest1.is_neighbor(tile):
+        if (tile.global_position - pos).length() < (nearest2.global_position - pos).length():
+            nearest2 = tile
+
+    tile = get_neighbor(Global.Dir.UpRight)
+    if tile != null and tile != nearest1 and nearest1.is_neighbor(tile):
+        if (tile.global_position - pos).length() < (nearest2.global_position - pos).length():
+            nearest2 = tile
+
+    tile = get_neighbor(Global.Dir.DownRight)
+    if tile != null and tile != nearest1 and nearest1.is_neighbor(tile):
+        if (tile.global_position - pos).length() < (nearest2.global_position - pos).length():
+            nearest2 = tile
+
+    tile = get_neighbor(Global.Dir.Down)
+    if tile != null and tile != nearest1 and nearest1.is_neighbor(tile):
+        if (tile.global_position - pos).length() < (nearest2.global_position - pos).length():
+            nearest2 = tile
+
+    tile = get_neighbor(Global.Dir.DownLeft)
+    if tile != null and tile != nearest1 and nearest1.is_neighbor(tile):
+        if (tile.global_position - pos).length() < (nearest2.global_position - pos).length():
+            nearest2 = tile
+
+    tile = get_neighbor(Global.Dir.UpLeft)
+    if tile != null and tile != nearest1 and nearest1.is_neighbor(tile):
+        if (tile.global_position - pos).length() < (nearest2.global_position - pos).length():
+            nearest2 = tile
+
+    nearest1.isCursor = true
+    nearest2.isCursor = true
+
+
+func clear_cursor():
+    set_is_cursor(false)
+
+    var tile : Tile
+
+    tile = get_neighbor(Global.Dir.Up)
+    if tile != null and tile.isCursor:
+        tile.isCursor = false
+
+    tile = get_neighbor(Global.Dir.UpRight)
+    if tile != null and tile.isCursor:
+        tile.isCursor = false
+
+    tile = get_neighbor(Global.Dir.DownRight)
+    if tile != null and tile.isCursor:
+        tile.isCursor = false
+
+    tile = get_neighbor(Global.Dir.Down)
+    if tile != null and tile.isCursor:
+        tile.isCursor = false
+
+    tile = get_neighbor(Global.Dir.DownLeft)
+    if tile != null and tile.isCursor:
+        tile.isCursor = false
+
+    tile = get_neighbor(Global.Dir.UpLeft)
+    if tile != null and tile.isCursor:
+        tile.isCursor = false
+
+
+func spin(spinDir):
+    pass
+#    var dir = Tile1.find_neighbor(Tile2)
+#
+#    match dir:
+#        Global.Dir.UpLeft:
+#            if Tile1.get_neighbor(Global.Dir.DownLeft) == Tile3:
+#                _spin(Tile1, Tile2, Tile3, spinDir)
+#            else:
+#                _spin(Tile1, Tile3, Tile2, spinDir)
+#        Global.Dir.Up:
+#            if Tile1.get_neighbor(Global.Dir.UpLeft) == Tile3:
+#                _spin(Tile1, Tile2, Tile3, spinDir)
+#            else:
+#                _spin(Tile1, Tile3, Tile2, spinDir)
+#        Global.Dir.UpRight:
+#            if Tile1.get_neighbor(Global.Dir.Up) == Tile3:
+#                _spin(Tile1, Tile2, Tile3, spinDir)
+#            else:
+#                _spin(Tile1, Tile3, Tile2, spinDir)
+#        Global.Dir.DownRight:
+#            if Tile1.get_neighbor(Global.Dir.UpRight) == Tile3:
+#                _spin(Tile1, Tile2, Tile3, spinDir)
+#            else:
+#                _spin(Tile1, Tile3, Tile2, spinDir)
+#        Global.Dir.Down:
+#            if Tile1.get_neighbor(Global.Dir.DownRight) == Tile3:
+#                _spin(Tile1, Tile2, Tile3, spinDir)
+#            else:
+#                _spin(Tile1, Tile3, Tile2, spinDir)
+#        Global.Dir.DownLeft:
+#            if Tile1.get_neighbor(Global.Dir.Down) == Tile3:
+#                _spin(Tile1, Tile2, Tile3, spinDir)
+#            else:
+#                _spin(Tile1, Tile3, Tile2, spinDir)
+
+
+func _spin(tile1 : Tile, tile2 : Tile, tile3 : Tile, spinDir):
+    var tile1Color : Color = tile1.color
+
+    if spinDir == Global.SpinDir.Clockwise:
+        tile1.set_color(tile2.color)
+        tile2.set_color(tile3.color)
+        tile3.set_color(tile1Color)
+    else:
+        tile1.set_color(tile3.color)
+        tile3.set_color(tile2.color)
+        tile2.set_color(tile1Color)
 
 
 func safe_free():

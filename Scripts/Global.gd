@@ -2,13 +2,22 @@ extends Node
 
 var Font : Font = load("res://Fonts/LibreBaskerville_DynamicFont.tres")
 
+enum TileType {
+    Normal,
+    Flower,
+    Pearl
+}
+
 enum TileColor {
     Red,
     Magenta,
     Yellow,
     Green,
     Blue,
-    Purple
+    Purple,
+
+    Flower,
+    Pearl
 }
 
 enum Dir {
@@ -26,11 +35,6 @@ enum SpinDir {
     AntiClockwise
 }
 
-enum TileType {
-    Normal,
-    Flower,
-    Pearl
-}
 
 const Red : Color = Color("#dc322f")
 const Magenta : Color = Color("#d33682")
