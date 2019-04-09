@@ -2,22 +2,21 @@ extends Node2D
 
 class_name Tile, "res://Scenes/Hexagon.tscn"
 
-var id : int
-
 var x : int
 var y : int
 
 var type
 
-var color : Color setget ,get_color
+var color : Color setget set_color
 var isCursor : bool setget set_is_cursor,get_is_cursor
 
 onready var _face : Polygon2D = $Face
 onready var _back : Polygon2D = $Back
 
 
-func get_color() -> Color:
-    return _face.color
+func set_color(value : Color):
+    color = value
+    _face.color = value
 
 
 func set_is_cursor(value : bool):
@@ -28,10 +27,21 @@ func get_is_cursor() -> bool:
     return _back.visible
 
 
-func _ready():
-    type = Global.TileType.Normal
+func _init():
+    init()
 
-    _face.color = Global.get_color(randi() % 6)
+
+func _ready():
+    ready()
+
+
+func init():
+    type = Global.TileType.Normal
+    color = Global.get_color(randi() % 6)
+
+
+func ready():
+    _face.color = color
 
 
 func get_neighbor(dir) -> Tile:
@@ -171,7 +181,10 @@ func is_cluster() -> bool:
 # Checks if this tile is the center of a flower, where every neighbor
 # is of the same color but different from the color of this tile.
 #
-func is_flower() -> bool:
+# A pistil is the structure of the gynoecium, or the female
+# reproductive organ.
+#
+func is_pistile() -> bool:
     var neighborTopLeft : Tile = get_neighbor(Global.Dir.UpLeft)
     var neighborTop : Tile = get_neighbor(Global.Dir.Up)
     var neighborTopRight : Tile = get_neighbor(Global.Dir.UpRight)
@@ -187,6 +200,29 @@ func is_flower() -> bool:
         and neighborTopLeft.color == neighborBottomRight.color
         and neighborTopLeft.color == neighborBottom.color
         and neighborTopLeft.color == neighborBottomLeft.color)
+
+
+#
+# Checks if this tile is the outer ring of a flower, where a neighboring
+# tile returns is_pistile() == true.
+#
+# A petal is a part of the corolla--a reproductive whorl.
+#
+func is_petal() -> bool:
+    var neighborTopLeft : Tile = get_neighbor(Global.Dir.UpLeft)
+    var neighborTop : Tile = get_neighbor(Global.Dir.Up)
+    var neighborTopRight : Tile = get_neighbor(Global.Dir.UpRight)
+    var neighborBottomRight : Tile = get_neighbor(Global.Dir.DownRight)
+    var neighborBottom : Tile = get_neighbor(Global.Dir.Down)
+    var neighborBottomLeft : Tile = get_neighbor(Global.Dir.DownLeft)
+
+    # we compare the colors as a shortcut--so we don't have to call .is_pistile()
+    return ((neighborTopLeft != null and color != neighborTopLeft.color and neighborTopLeft.is_pistile())
+        or (neighborTop != null and color != neighborTop.color and neighborTop.is_pistile())
+        or (neighborTopRight != null and color != neighborTopRight.color and neighborTopRight.is_pistile())
+        or (neighborBottomRight != null and color != neighborBottomRight.color and neighborBottomRight.is_pistile())
+        or (neighborBottom != null and color != neighborBottom.color and neighborBottom.is_pistile())
+        or (neighborBottomLeft != null and color != neighborBottomLeft.color and neighborBottomLeft.is_pistile()))
 
 
 func _on_MouseArea_mouse_entered():
@@ -304,40 +340,67 @@ func clear_cursor():
 
 
 func spin(spinDir):
-    pass
-#    var dir = Tile1.find_neighbor(Tile2)
-#
-#    match dir:
-#        Global.Dir.UpLeft:
-#            if Tile1.get_neighbor(Global.Dir.DownLeft) == Tile3:
-#                _spin(Tile1, Tile2, Tile3, spinDir)
-#            else:
-#                _spin(Tile1, Tile3, Tile2, spinDir)
-#        Global.Dir.Up:
-#            if Tile1.get_neighbor(Global.Dir.UpLeft) == Tile3:
-#                _spin(Tile1, Tile2, Tile3, spinDir)
-#            else:
-#                _spin(Tile1, Tile3, Tile2, spinDir)
-#        Global.Dir.UpRight:
-#            if Tile1.get_neighbor(Global.Dir.Up) == Tile3:
-#                _spin(Tile1, Tile2, Tile3, spinDir)
-#            else:
-#                _spin(Tile1, Tile3, Tile2, spinDir)
-#        Global.Dir.DownRight:
-#            if Tile1.get_neighbor(Global.Dir.UpRight) == Tile3:
-#                _spin(Tile1, Tile2, Tile3, spinDir)
-#            else:
-#                _spin(Tile1, Tile3, Tile2, spinDir)
-#        Global.Dir.Down:
-#            if Tile1.get_neighbor(Global.Dir.DownRight) == Tile3:
-#                _spin(Tile1, Tile2, Tile3, spinDir)
-#            else:
-#                _spin(Tile1, Tile3, Tile2, spinDir)
-#        Global.Dir.DownLeft:
-#            if Tile1.get_neighbor(Global.Dir.Down) == Tile3:
-#                _spin(Tile1, Tile2, Tile3, spinDir)
-#            else:
-#                _spin(Tile1, Tile3, Tile2, spinDir)
+    var tile : Tile
+
+    tile = get_neighbor(Global.Dir.UpLeft)
+    if tile != null and tile.isCursor:
+        var neighborTop : Tile = get_neighbor(Global.Dir.Up)
+        var neighborBottomLeft : Tile = get_neighbor(Global.Dir.DownLeft)
+
+        if neighborTop != null and neighborTop.isCursor:
+            _spin(self, tile, neighborTop, spinDir)
+        else:
+            _spin(self, neighborBottomLeft, tile, spinDir)
+
+    tile = get_neighbor(Global.Dir.Up)
+    if tile != null and tile.isCursor:
+        var neighborTopRight : Tile = get_neighbor(Global.Dir.UpRight)
+        var neighborTopLeft : Tile = get_neighbor(Global.Dir.UpLeft)
+
+        if neighborTopRight != null and neighborTopRight.isCursor:
+            _spin(self, tile, neighborTopRight, spinDir)
+        else:
+            _spin(self, neighborTopLeft, tile, spinDir)
+
+    tile = get_neighbor(Global.Dir.UpRight)
+    if tile != null and tile.isCursor:
+        var neighborBottomRight : Tile = get_neighbor(Global.Dir.DownRight)
+        var neighborTop : Tile = get_neighbor(Global.Dir.Up)
+
+        if neighborBottomRight != null and neighborBottomRight.isCursor:
+            _spin(self, tile, neighborBottomRight, spinDir)
+        else:
+            _spin(self, neighborTop, tile, spinDir)
+
+    tile = get_neighbor(Global.Dir.DownRight)
+    if tile != null and tile.isCursor:
+        var neighborBottom : Tile = get_neighbor(Global.Dir.Down)
+        var neighborTopRight : Tile = get_neighbor(Global.Dir.UpRight)
+
+        if neighborBottom != null and neighborBottom.isCursor:
+            _spin(self, tile, neighborBottom, spinDir)
+        else:
+            _spin(self, neighborTopRight, tile, spinDir)
+
+    tile = get_neighbor(Global.Dir.Down)
+    if tile != null and tile.isCursor:
+        var neighborBottomLeft : Tile = get_neighbor(Global.Dir.DownLeft)
+        var neighborBottomRight : Tile = get_neighbor(Global.Dir.DownRight)
+
+        if neighborBottomLeft != null and neighborBottomLeft.isCursor:
+            _spin(self, tile, neighborBottomLeft, spinDir)
+        else:
+            _spin(self, neighborBottomRight, tile, spinDir)
+
+    tile = get_neighbor(Global.Dir.DownLeft)
+    if tile != null and tile.isCursor:
+        var neighborTopLeft : Tile = get_neighbor(Global.Dir.UpLeft)
+        var neighborBottom : Tile = get_neighbor(Global.Dir.Down)
+
+        if neighborTopLeft != null and neighborTopLeft.isCursor:
+            _spin(self, tile, neighborTopLeft, spinDir)
+        else:
+            _spin(self, neighborBottom, tile, spinDir)
 
 
 func _spin(tile1 : Tile, tile2 : Tile, tile3 : Tile, spinDir):
@@ -355,5 +418,4 @@ func _spin(tile1 : Tile, tile2 : Tile, tile3 : Tile, spinDir):
 
 func safe_free():
     if not is_queued_for_deletion():
-        Global.Board.Board[x][y] = null
         queue_free()

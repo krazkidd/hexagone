@@ -1,6 +1,11 @@
 extends Node
 
-var Font : Font = load("res://Fonts/LibreBaskerville_DynamicFont.tres")
+var Resources : Dictionary = {
+    "Font": load("res://Fonts/LibreBaskerville_DynamicFont.tres"),
+
+    "Tile": load("res://Scenes/Tile.tscn"),
+    "Flower": load("res://Scenes/FlowerTile.tscn")
+}
 
 enum TileType {
     Normal,
@@ -35,7 +40,6 @@ enum SpinDir {
     AntiClockwise
 }
 
-
 const Red : Color = Color("#dc322f")
 const Magenta : Color = Color("#d33682")
 const Yellow : Color = Color("#b58900")
@@ -57,7 +61,7 @@ var DownRight : Vector2 = Vector2(_x, _y).normalized()
 var Board : Board
 
 
-func _ready():
+func _init():
     randomize()
 
 
