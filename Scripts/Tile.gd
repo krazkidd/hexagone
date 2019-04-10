@@ -340,73 +340,42 @@ func clear_cursor():
 
 
 func spin(spinDir):
-    var tile : Tile
+    var neighborTopLeft : Tile = get_neighbor(Global.Dir.UpLeft)
+    var neighborTop : Tile = get_neighbor(Global.Dir.Up)
+    var neighborTopRight : Tile = get_neighbor(Global.Dir.UpRight)
+    var neighborBottomRight : Tile = get_neighbor(Global.Dir.DownRight)
+    var neighborBottom : Tile = get_neighbor(Global.Dir.Down)
+    var neighborBottomLeft : Tile = get_neighbor(Global.Dir.DownLeft)
 
-    tile = get_neighbor(Global.Dir.UpLeft)
-    if tile != null and tile.isCursor:
-        var neighborTop : Tile = get_neighbor(Global.Dir.Up)
-        var neighborBottomLeft : Tile = get_neighbor(Global.Dir.DownLeft)
+    if (neighborTopLeft != null and neighborTopLeft.isCursor
+        and neighborTop != null and neighborTop.isCursor):
+        _spin(self, neighborTopLeft, neighborTop, spinDir)
 
-        if neighborTop != null and neighborTop.isCursor:
-            _spin(self, tile, neighborTop, spinDir)
-        else:
-            _spin(self, neighborBottomLeft, tile, spinDir)
+    if (neighborTop != null and neighborTop.isCursor
+        and neighborTopRight != null and neighborTopRight.isCursor):
+        _spin(self, neighborTop, neighborTopRight, spinDir)
 
-    tile = get_neighbor(Global.Dir.Up)
-    if tile != null and tile.isCursor:
-        var neighborTopRight : Tile = get_neighbor(Global.Dir.UpRight)
-        var neighborTopLeft : Tile = get_neighbor(Global.Dir.UpLeft)
+    if (neighborTopRight != null and neighborTopRight.isCursor
+        and neighborBottomRight != null and neighborBottomRight.isCursor):
+        _spin(self, neighborTopRight, neighborBottomRight, spinDir)
 
-        if neighborTopRight != null and neighborTopRight.isCursor:
-            _spin(self, tile, neighborTopRight, spinDir)
-        else:
-            _spin(self, neighborTopLeft, tile, spinDir)
+    if (neighborBottomRight != null and neighborBottomRight.isCursor
+        and neighborBottom != null and neighborBottom.isCursor):
+        _spin(self, neighborBottomRight, neighborBottom, spinDir)
 
-    tile = get_neighbor(Global.Dir.UpRight)
-    if tile != null and tile.isCursor:
-        var neighborBottomRight : Tile = get_neighbor(Global.Dir.DownRight)
-        var neighborTop : Tile = get_neighbor(Global.Dir.Up)
+    if (neighborBottom != null and neighborBottom.isCursor
+        and neighborBottomLeft != null and neighborBottomLeft.isCursor):
+        _spin(self, neighborBottom, neighborBottomLeft, spinDir)
 
-        if neighborBottomRight != null and neighborBottomRight.isCursor:
-            _spin(self, tile, neighborBottomRight, spinDir)
-        else:
-            _spin(self, neighborTop, tile, spinDir)
-
-    tile = get_neighbor(Global.Dir.DownRight)
-    if tile != null and tile.isCursor:
-        var neighborBottom : Tile = get_neighbor(Global.Dir.Down)
-        var neighborTopRight : Tile = get_neighbor(Global.Dir.UpRight)
-
-        if neighborBottom != null and neighborBottom.isCursor:
-            _spin(self, tile, neighborBottom, spinDir)
-        else:
-            _spin(self, neighborTopRight, tile, spinDir)
-
-    tile = get_neighbor(Global.Dir.Down)
-    if tile != null and tile.isCursor:
-        var neighborBottomLeft : Tile = get_neighbor(Global.Dir.DownLeft)
-        var neighborBottomRight : Tile = get_neighbor(Global.Dir.DownRight)
-
-        if neighborBottomLeft != null and neighborBottomLeft.isCursor:
-            _spin(self, tile, neighborBottomLeft, spinDir)
-        else:
-            _spin(self, neighborBottomRight, tile, spinDir)
-
-    tile = get_neighbor(Global.Dir.DownLeft)
-    if tile != null and tile.isCursor:
-        var neighborTopLeft : Tile = get_neighbor(Global.Dir.UpLeft)
-        var neighborBottom : Tile = get_neighbor(Global.Dir.Down)
-
-        if neighborTopLeft != null and neighborTopLeft.isCursor:
-            _spin(self, tile, neighborTopLeft, spinDir)
-        else:
-            _spin(self, neighborBottom, tile, spinDir)
+    if (neighborBottomLeft != null and neighborBottomLeft.isCursor
+        and neighborTopLeft != null and neighborTopLeft.isCursor):
+        _spin(self, neighborBottomLeft, neighborTopLeft, spinDir)
 
 
 func _spin(tile1 : Tile, tile2 : Tile, tile3 : Tile, spinDir):
     var tile1Color : Color = tile1.color
 
-    if spinDir == Global.SpinDir.Clockwise:
+    if spinDir == Global.SpinDir.AntiClockwise:
         tile1.set_color(tile2.color)
         tile2.set_color(tile3.color)
         tile3.set_color(tile1Color)
