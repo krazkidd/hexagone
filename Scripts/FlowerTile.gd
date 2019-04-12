@@ -49,19 +49,27 @@ func spin(spinDir):
     var neighborBottom : Tile = get_neighbor(Global.Dir.Down)
     var neighborBottomLeft : Tile = get_neighbor(Global.Dir.DownLeft)
 
-    var neighborTopLeftColor : Color = neighborTopLeft.color
+    var neighborTopLeftx : int = neighborTopLeft.x
+    var neighborTopLefty : int = neighborTopLeft.y
 
     if spinDir == Global.SpinDir.Clockwise:
-        neighborTopLeft.set_color(neighborTop.color)
-        neighborTop.set_color(neighborTopRight.color)
-        neighborTopRight.set_color(neighborBottomRight.color)
-        neighborBottomRight.set_color(neighborBottom.color)
-        neighborBottom.set_color(neighborBottomLeft.color)
-        neighborBottomLeft.set_color(neighborTopLeftColor)
+        neighborTopLeft.set_xy(neighborTop.x, neighborTop.y)
+        neighborTop.set_xy(neighborTopRight.x, neighborTopRight.y)
+        neighborTopRight.set_xy(neighborBottomRight.x, neighborBottomRight.y)
+        neighborBottomRight.set_xy(neighborBottom.x, neighborBottom.y)
+        neighborBottom.set_xy(neighborBottomLeft.x, neighborBottomLeft.y)
+        neighborBottomLeft.set_xy(neighborTopLeftx, neighborTopLefty)
     else:
-        neighborTopLeft.set_color(neighborBottomLeft.color)
-        neighborBottomLeft.set_color(neighborBottom.color)
-        neighborBottom.set_color(neighborBottomRight.color)
-        neighborBottomRight.set_color(neighborTopRight.color)
-        neighborTopRight.set_color(neighborTop.color)
-        neighborTop.set_color(neighborTopLeftColor)
+        neighborTopLeft.set_xy(neighborBottomLeft.x, neighborBottomLeft.y)
+        neighborBottomLeft.set_xy(neighborBottom.x, neighborBottom.y)
+        neighborBottom.set_xy(neighborBottomRight.x, neighborBottomRight.y)
+        neighborBottomRight.set_xy(neighborTopRight.x, neighborTopRight.y)
+        neighborTopRight.set_xy(neighborTop.x, neighborTop.y)
+        neighborTop.set_xy(neighborTopLeftx, neighborTopLefty)
+
+    Global.Board.Board[neighborTopLeft.x][neighborTopLeft.y] = neighborTopLeft
+    Global.Board.Board[neighborTop.x][neighborTop.y] = neighborTop
+    Global.Board.Board[neighborTopRight.x][neighborTopRight.y] = neighborTopRight
+    Global.Board.Board[neighborBottomRight.x][neighborBottomRight.y] = neighborBottomRight
+    Global.Board.Board[neighborBottom.x][neighborBottom.y] = neighborBottom
+    Global.Board.Board[neighborBottomLeft.x][neighborBottomLeft.y] = neighborBottomLeft

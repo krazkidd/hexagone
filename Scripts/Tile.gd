@@ -2,8 +2,8 @@ extends Node2D
 
 class_name Tile, "res://Scenes/Hexagon.tscn"
 
-var x : int
-var y : int
+var x : int setget set_x,get_x
+var y : int setget set_y,get_y
 
 var type
 
@@ -12,6 +12,30 @@ var isCursor : bool setget set_is_cursor,get_is_cursor
 
 onready var _face : Polygon2D = $Face
 onready var _back : Polygon2D = $Back
+
+
+func get_x() -> int:
+    return x
+
+
+func set_x(value : int):
+    set_xy(value, y)
+
+
+func get_y() -> int:
+    return y
+
+
+func set_y(value : int):
+    set_xy(x, value)
+
+
+func set_xy(xval : int, yval : int):
+    # bypass set_x()/set_y() so we only update position once
+    x = xval
+    y = yval
+
+    position = Vector2(x * 1.5, y * 2 - 1.0 * (x % 2))
 
 
 func set_color(value : Color):
@@ -350,39 +374,39 @@ func spin(spinDir):
     if (neighborTopLeft != null and neighborTopLeft.isCursor
         and neighborTop != null and neighborTop.isCursor):
         _spin(self, neighborTopLeft, neighborTop, spinDir)
-
-    if (neighborTop != null and neighborTop.isCursor
+    elif (neighborTop != null and neighborTop.isCursor
         and neighborTopRight != null and neighborTopRight.isCursor):
         _spin(self, neighborTop, neighborTopRight, spinDir)
-
-    if (neighborTopRight != null and neighborTopRight.isCursor
+    elif (neighborTopRight != null and neighborTopRight.isCursor
         and neighborBottomRight != null and neighborBottomRight.isCursor):
         _spin(self, neighborTopRight, neighborBottomRight, spinDir)
-
-    if (neighborBottomRight != null and neighborBottomRight.isCursor
+    elif (neighborBottomRight != null and neighborBottomRight.isCursor
         and neighborBottom != null and neighborBottom.isCursor):
         _spin(self, neighborBottomRight, neighborBottom, spinDir)
-
-    if (neighborBottom != null and neighborBottom.isCursor
+    elif (neighborBottom != null and neighborBottom.isCursor
         and neighborBottomLeft != null and neighborBottomLeft.isCursor):
         _spin(self, neighborBottom, neighborBottomLeft, spinDir)
-
-    if (neighborBottomLeft != null and neighborBottomLeft.isCursor
+    elif (neighborBottomLeft != null and neighborBottomLeft.isCursor
         and neighborTopLeft != null and neighborTopLeft.isCursor):
         _spin(self, neighborBottomLeft, neighborTopLeft, spinDir)
 
 
 func _spin(tile1 : Tile, tile2 : Tile, tile3 : Tile, spinDir):
-    var tile1Color : Color = tile1.color
+    var tile1x : int = tile1.x
+    var tile1y : int = tile1.y
 
-    if spinDir == Global.SpinDir.AntiClockwise:
-        tile1.set_color(tile2.color)
-        tile2.set_color(tile3.color)
-        tile3.set_color(tile1Color)
+    if spinDir == Global.SpinDir.Clockwise:
+        tile1.set_xy(tile2.x, tile2.y)
+        tile2.set_xy(tile3.x, tile3.y)
+        tile3.set_xy(tile1x, tile1y)
     else:
-        tile1.set_color(tile3.color)
-        tile3.set_color(tile2.color)
-        tile2.set_color(tile1Color)
+        tile1.set_xy(tile3.x, tile3.y)
+        tile3.set_xy(tile2.x, tile2.y)
+        tile2.set_xy(tile1x, tile1y)
+
+    Global.Board.Board[tile1.x][tile1.y] = tile1
+    Global.Board.Board[tile2.x][tile2.y] = tile2
+    Global.Board.Board[tile3.x][tile3.y] = tile3
 
 
 func safe_free():

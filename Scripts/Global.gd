@@ -62,7 +62,8 @@ var Board : Board
 
 
 func _init():
-    randomize()
+    #TODO randomize()
+    pass
 
 
 func get_color(tileColor):
