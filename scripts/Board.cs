@@ -115,8 +115,7 @@ public partial class Board : Node2D
 		tile.X = x;
 		tile.Y = y;
 
-		Area2D mouseArea = tile.GetNode<Area2D>("MouseArea");
-		mouseArea.MouseEntered += () =>
+		tile.MouseEntered += () =>
 		{
 			CursorTile = tile;
 
