@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ig1ml5jl58xj"]
 
-[ext_resource type="PackedScene" uid="uid://bt2oc2xlnyuf6" path="res://scenes/Tile.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://bt2oc2xlnyuf6" path="res://scenes/tile.tscn" id="1"]
 [ext_resource type="Script" path="res://scripts/FlowerTile.cs" id="2_lkfg6"]
 [ext_resource type="Texture2D" uid="uid://ci78wufa1b0a0" path="res://icon.png" id="3"]
 

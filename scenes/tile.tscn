@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bt2oc2xlnyuf6"]
 
-[ext_resource type="PackedScene" uid="uid://wacv5gmryfgf" path="res://scenes/Hexagon.tscn" id="1_ccid6"]
+[ext_resource type="PackedScene" uid="uid://wacv5gmryfgf" path="res://scenes/hexagon.tscn" id="1_ccid6"]
 [ext_resource type="Script" path="res://scripts/Tile.cs" id="2_j8aps"]
 
 [node name="Tile" instance=ExtResource("1_ccid6")]
