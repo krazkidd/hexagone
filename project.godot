@@ -12,12 +12,8 @@ config_version=5
 
 config/name="Hexagone"
 run/main_scene="res://Scenes/Board.tscn"
-config/features=PackedStringArray("4.0")
+config/features=PackedStringArray("4.0", "C#")
 config/icon="res://icon.png"
-
-[autoload]
-
-Global="*res://Scripts/Global.gd"
 
 [display]
 
