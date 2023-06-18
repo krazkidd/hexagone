@@ -29,8 +29,8 @@ public partial class Board : Node2D
 
 	public Tile[][] Board_;
 
-	private readonly PackedScene tileScene = GD.Load<PackedScene>("res://Scenes/Tile.tscn");
-	private readonly PackedScene flowerTileScene = GD.Load<PackedScene>("res://Scenes/FlowerTile.tscn");
+	private readonly PackedScene tileScene = GD.Load<PackedScene>("res://scenes/Tile.tscn");
+	private readonly PackedScene flowerTileScene = GD.Load<PackedScene>("res://scenes/FlowerTile.tscn");
 
 	public Board()
 	{
