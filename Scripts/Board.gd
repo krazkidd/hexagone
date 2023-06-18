@@ -2,7 +2,7 @@ extends Node2D
 
 class_name Board
 
-var cursorTile : Tile setget set_cursor_tile
+var cursorTile : Tile: set = set_cursor_tile
 
 var Board : Array
 
@@ -60,9 +60,9 @@ func create_tile(tiletype, x : int, y : int):
 
     match tiletype:
         Global.TileType.Normal:
-            tile = Global.Resources.Tile.instance()
+            tile = Global.Resources.Tile.instantiate()
         Global.TileType.Flower:
-            tile = Global.Resources.Flower.instance()
+            tile = Global.Resources.Flower.instantiate()
         Global.TileType.Pearl:
             #TODO
             pass
@@ -189,9 +189,9 @@ func check_board() -> bool:
 
 func _input(event):
     if cursorTile != null and event is InputEventMouseButton and event.pressed:
-        if event.button_index == BUTTON_LEFT:
+        if event.button_index == MOUSE_BUTTON_LEFT:
             cursorTile.spin(Global.SpinDir.AntiClockwise)
-        elif event.button_index == BUTTON_RIGHT:
+        elif event.button_index == MOUSE_BUTTON_RIGHT:
             cursorTile.spin(Global.SpinDir.Clockwise)
 
         while check_board():

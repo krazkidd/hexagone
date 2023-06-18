@@ -47,8 +47,8 @@ const Green : Color = Color("#859900")
 const Blue : Color = Color("#6c71c4")
 const Purple : Color = Color("#6c71c4")
 
-const _x : float = 0.5 * cos(deg2rad(30)) / tan(deg2rad(30)) # _y / tan(30)
-const _y : float = 0.5 * cos(deg2rad(30))
+const _x : float = 0.5 * cos(deg_to_rad(30)) / tan(deg_to_rad(30)) # _y / tan(30)
+const _y : float = 0.5 * cos(deg_to_rad(30))
 
 var UpLeft : Vector2 = Vector2(-_x, -_y).normalized()
 var Up : Vector2 = Vector2.UP

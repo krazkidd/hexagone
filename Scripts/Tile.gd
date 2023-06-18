@@ -2,16 +2,16 @@ extends Node2D
 
 class_name Tile, "res://Scenes/Hexagon.tscn"
 
-var x : int setget set_x,get_x
-var y : int setget set_y,get_y
+var x : int: get = get_x, set = set_x
+var y : int: get = get_y, set = set_y
 
 var type
 
-var color : Color setget set_color
-var isCursor : bool setget set_is_cursor,get_is_cursor
+var color : Color: set = set_color
+var isCursor : bool: get = get_is_cursor, set = set_is_cursor
 
-onready var _face : Polygon2D = $Face
-onready var _back : Polygon2D = $Back
+@onready var _face : Polygon2D = $Face
+@onready var _back : Polygon2D = $Back
 
 
 func get_x() -> int:

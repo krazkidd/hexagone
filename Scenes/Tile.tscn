@@ -12,6 +12,6 @@ visible = false
 [node name="MouseArea" type="Area2D" parent="." index="2"]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MouseArea" index="0"]
-polygon = PoolVector2Array( -1, 0, -0.5, -1, 0.5, -1, 1, 0, 0.5, 1, -0.5, 1 )
+polygon = PackedVector2Array( -1, 0, -0.5, -1, 0.5, -1, 1, 0, 0.5, 1, -0.5, 1 )
 
 [connection signal="mouse_entered" from="MouseArea" to="." method="_on_MouseArea_mouse_entered"]
