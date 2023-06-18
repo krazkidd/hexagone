@@ -3,7 +3,7 @@ using System;
 
 using Hexagone;
 
-public partial class Tile : Node2D
+public partial class Tile : Area2D
 {
 
 	private int _x;
