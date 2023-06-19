@@ -18,7 +18,9 @@ public partial class Tile : Area2D
 		}
 		set
 		{
-			SetXY(value, _y);
+			_x = value;
+
+			SetXY(_x, _y);
 		}
 	}
 
@@ -30,7 +32,9 @@ public partial class Tile : Area2D
 		}
 		set
 		{
-			SetXY(_y, value);
+			_y = value;
+
+			SetXY(_x, _y);
 		}
 	}
 
@@ -70,7 +74,7 @@ public partial class Tile : Area2D
 
 	public void SetXY(int xval, int yval)
 	{
-		Position = new Vector2(xval * 1.5f, yval * 2.0f - 1.0f * (xval % 2));
+		Position = new Vector2(xval * 75.0f, yval * 100.0f - 50.0f * (xval % 2));
 	}
 
 	// Called when the node enters the scene tree for the first time.

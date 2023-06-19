@@ -7,3 +7,5 @@
 script = ExtResource("1_fjfcu")
 
 [node name="Board" parent="." instance=ExtResource("1_hj26e")]
+position = Vector2(471, 185)
+scale = Vector2(0.5, 0.5)
