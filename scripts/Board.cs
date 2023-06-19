@@ -23,6 +23,9 @@ public partial class Board : Node2D
 				_cursorTile.ClearCursor(this);
 			}
 
+			value.IsCursor = true;
+			value.SetCursorNeighbors(this);
+
 			_cursorTile = value;
 		}
 	}
@@ -115,14 +118,7 @@ public partial class Board : Node2D
 		tile.X = x;
 		tile.Y = y;
 
-		tile.MouseEntered += () =>
-		{
-			CursorTile = tile;
-
-			tile.IsCursor = true;
-
-			tile.SetCursorNeighbors(this);
-		};
+		tile.MouseEntered += () => CursorTile = tile;
 
 		return tile;
 	}
