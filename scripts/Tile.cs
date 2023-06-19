@@ -79,10 +79,6 @@ public partial class Tile : Area2D
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 	public Tile GetNeighbor(Board board, Dir dir)
 	{
 		int otherX = X;
@@ -272,7 +268,6 @@ public partial class Tile : Area2D
 			|| neighborBottomRight != null && neighborBottom != null && Color == neighborBottomRight.Color && Color == neighborBottom.Color
 			|| neighborBottom != null && neighborBottomLeft != null && Color == neighborBottom.Color && Color == neighborBottomLeft.Color
 			|| neighborBottomLeft != null && neighborTopLeft != null && Color == neighborBottomLeft.Color && Color == neighborTopLeft.Color);
-
 	}
 
 	// Checks if this tile is the center of a flower, where every neighbor

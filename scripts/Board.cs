@@ -78,16 +78,6 @@ public partial class Board : Node2D
 		}
 	}
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 	// Whether or not the given tile coordinates on the board is
 	// *supposed* to be empty, because the board columns are staggered.
 	public bool IsEmptySpot(int x, int y)
@@ -106,7 +96,7 @@ public partial class Board : Node2D
 
 				break;
 			case TileType.Flower:
-				tile = flowerTileScene.Instantiate<Tile>();
+				tile = flowerTileScene.Instantiate<FlowerTile>();
 
 				break;
 			case TileType.Pearl:
@@ -286,6 +276,5 @@ public partial class Board : Node2D
 			}
 		}
 	}
-
 
 }
