@@ -110,6 +110,8 @@ public partial class Board : Node2D
 		tile.X = x;
 		tile.Y = y;
 
+		tile.Color = Hexagone.Color.GetColor((TileColor)(new Random().Next() % 6));
+
 		tile.MouseEntered += () => CursorTile = tile;
 
 		return tile;

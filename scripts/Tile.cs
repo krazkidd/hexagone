@@ -45,7 +45,11 @@ public partial class Tile : Area2D
 		set
 		{
 			_color = value;
-			face.Color = value;
+
+			if (face != null)
+			{
+				face.Color = value;
+			}
 		}
 	}
 
@@ -75,7 +79,7 @@ public partial class Tile : Area2D
 		face = GetNode<Polygon2D>("Face");
 		back = GetNode<Polygon2D>("Back");
 
-		Color = Hexagone.Color.GetColor((TileColor)(new Random().Next() % 6));
+		face.Color = Color;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
