@@ -1,0 +1,291 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgyqd5p3tu3bw"]
+
+[ext_resource type="Script" path="res://scripts/Board.cs" id="1_xg1uy"]
+[ext_resource type="PackedScene" uid="uid://bt2oc2xlnyuf6" path="res://scenes/tile.tscn" id="2_2xonm"]
+
+[node name="Board" type="Node2D"]
+script = ExtResource("1_xg1uy")
+
+[node name="Col_0" type="Node2D" parent="."]
+visible = false
+
+[node name="Tile_00" parent="Col_0" instance=ExtResource("2_2xonm")]
+
+[node name="Tile_01" parent="Col_0" instance=ExtResource("2_2xonm")]
+position = Vector2(0, 100)
+
+[node name="Tile_02" parent="Col_0" instance=ExtResource("2_2xonm")]
+position = Vector2(0, 200)
+
+[node name="Tile_03" parent="Col_0" instance=ExtResource("2_2xonm")]
+position = Vector2(0, 300)
+
+[node name="Tile_04" parent="Col_0" instance=ExtResource("2_2xonm")]
+position = Vector2(0, 400)
+
+[node name="Tile_05" parent="Col_0" instance=ExtResource("2_2xonm")]
+position = Vector2(0, 500)
+
+[node name="Tile_06" parent="Col_0" instance=ExtResource("2_2xonm")]
+position = Vector2(0, 600)
+
+[node name="Tile_07" parent="Col_0" instance=ExtResource("2_2xonm")]
+position = Vector2(0, 700)
+
+[node name="Col_1" type="Node2D" parent="."]
+visible = false
+
+[node name="Tile_10" parent="Col_1" instance=ExtResource("2_2xonm")]
+position = Vector2(75, -50)
+
+[node name="Tile_11" parent="Col_1" instance=ExtResource("2_2xonm")]
+position = Vector2(75, 50)
+
+[node name="Tile_12" parent="Col_1" instance=ExtResource("2_2xonm")]
+position = Vector2(75, 150)
+
+[node name="Tile_13" parent="Col_1" instance=ExtResource("2_2xonm")]
+position = Vector2(75, 250)
+
+[node name="Tile_14" parent="Col_1" instance=ExtResource("2_2xonm")]
+position = Vector2(75, 350)
+
+[node name="Tile_15" parent="Col_1" instance=ExtResource("2_2xonm")]
+position = Vector2(75, 450)
+
+[node name="Tile_16" parent="Col_1" instance=ExtResource("2_2xonm")]
+position = Vector2(75, 550)
+
+[node name="Tile_17" parent="Col_1" instance=ExtResource("2_2xonm")]
+position = Vector2(75, 650)
+
+[node name="Tile_18" parent="Col_1" instance=ExtResource("2_2xonm")]
+position = Vector2(75, 750)
+
+[node name="Col_2" type="Node2D" parent="."]
+visible = false
+
+[node name="Tile_20" parent="Col_2" instance=ExtResource("2_2xonm")]
+position = Vector2(150, 0)
+
+[node name="Tile_21" parent="Col_2" instance=ExtResource("2_2xonm")]
+position = Vector2(150, 100)
+
+[node name="Tile_22" parent="Col_2" instance=ExtResource("2_2xonm")]
+position = Vector2(150, 200)
+
+[node name="Tile_23" parent="Col_2" instance=ExtResource("2_2xonm")]
+position = Vector2(150, 300)
+
+[node name="Tile_04" parent="Col_2" instance=ExtResource("2_2xonm")]
+position = Vector2(150, 400)
+
+[node name="Tile_05" parent="Col_2" instance=ExtResource("2_2xonm")]
+position = Vector2(150, 500)
+
+[node name="Tile_06" parent="Col_2" instance=ExtResource("2_2xonm")]
+position = Vector2(150, 600)
+
+[node name="Tile_07" parent="Col_2" instance=ExtResource("2_2xonm")]
+position = Vector2(150, 700)
+
+[node name="Col_3" type="Node2D" parent="."]
+visible = false
+
+[node name="Tile_10" parent="Col_3" instance=ExtResource("2_2xonm")]
+position = Vector2(225, -50)
+
+[node name="Tile_11" parent="Col_3" instance=ExtResource("2_2xonm")]
+position = Vector2(225, 50)
+
+[node name="Tile_12" parent="Col_3" instance=ExtResource("2_2xonm")]
+position = Vector2(225, 150)
+
+[node name="Tile_13" parent="Col_3" instance=ExtResource("2_2xonm")]
+position = Vector2(225, 250)
+
+[node name="Tile_14" parent="Col_3" instance=ExtResource("2_2xonm")]
+position = Vector2(225, 350)
+
+[node name="Tile_15" parent="Col_3" instance=ExtResource("2_2xonm")]
+position = Vector2(225, 450)
+
+[node name="Tile_16" parent="Col_3" instance=ExtResource("2_2xonm")]
+position = Vector2(225, 550)
+
+[node name="Tile_17" parent="Col_3" instance=ExtResource("2_2xonm")]
+position = Vector2(225, 650)
+
+[node name="Tile_18" parent="Col_3" instance=ExtResource("2_2xonm")]
+position = Vector2(225, 750)
+
+[node name="Col_4" type="Node2D" parent="."]
+visible = false
+
+[node name="Tile_00" parent="Col_4" instance=ExtResource("2_2xonm")]
+position = Vector2(300, 0)
+
+[node name="Tile_01" parent="Col_4" instance=ExtResource("2_2xonm")]
+position = Vector2(300, 100)
+
+[node name="Tile_02" parent="Col_4" instance=ExtResource("2_2xonm")]
+position = Vector2(300, 200)
+
+[node name="Tile_03" parent="Col_4" instance=ExtResource("2_2xonm")]
+position = Vector2(300, 300)
+
+[node name="Tile_04" parent="Col_4" instance=ExtResource("2_2xonm")]
+position = Vector2(300, 400)
+
+[node name="Tile_05" parent="Col_4" instance=ExtResource("2_2xonm")]
+position = Vector2(300, 500)
+
+[node name="Tile_06" parent="Col_4" instance=ExtResource("2_2xonm")]
+position = Vector2(300, 600)
+
+[node name="Tile_07" parent="Col_4" instance=ExtResource("2_2xonm")]
+position = Vector2(300, 700)
+
+[node name="Col_5" type="Node2D" parent="."]
+visible = false
+
+[node name="Tile_10" parent="Col_5" instance=ExtResource("2_2xonm")]
+position = Vector2(375, -50)
+
+[node name="Tile_11" parent="Col_5" instance=ExtResource("2_2xonm")]
+position = Vector2(375, 50)
+
+[node name="Tile_12" parent="Col_5" instance=ExtResource("2_2xonm")]
+position = Vector2(375, 150)
+
+[node name="Tile_13" parent="Col_5" instance=ExtResource("2_2xonm")]
+position = Vector2(375, 250)
+
+[node name="Tile_14" parent="Col_5" instance=ExtResource("2_2xonm")]
+position = Vector2(375, 350)
+
+[node name="Tile_15" parent="Col_5" instance=ExtResource("2_2xonm")]
+position = Vector2(375, 450)
+
+[node name="Tile_16" parent="Col_5" instance=ExtResource("2_2xonm")]
+position = Vector2(375, 550)
+
+[node name="Tile_17" parent="Col_5" instance=ExtResource("2_2xonm")]
+position = Vector2(375, 650)
+
+[node name="Tile_18" parent="Col_5" instance=ExtResource("2_2xonm")]
+position = Vector2(375, 750)
+
+[node name="Col_6" type="Node2D" parent="."]
+visible = false
+
+[node name="Tile_00" parent="Col_6" instance=ExtResource("2_2xonm")]
+position = Vector2(450, 0)
+
+[node name="Tile_01" parent="Col_6" instance=ExtResource("2_2xonm")]
+position = Vector2(450, 100)
+
+[node name="Tile_02" parent="Col_6" instance=ExtResource("2_2xonm")]
+position = Vector2(450, 200)
+
+[node name="Tile_03" parent="Col_6" instance=ExtResource("2_2xonm")]
+position = Vector2(450, 300)
+
+[node name="Tile_04" parent="Col_6" instance=ExtResource("2_2xonm")]
+position = Vector2(450, 400)
+
+[node name="Tile_05" parent="Col_6" instance=ExtResource("2_2xonm")]
+position = Vector2(450, 500)
+
+[node name="Tile_06" parent="Col_6" instance=ExtResource("2_2xonm")]
+position = Vector2(450, 600)
+
+[node name="Tile_07" parent="Col_6" instance=ExtResource("2_2xonm")]
+position = Vector2(450, 700)
+
+[node name="Col_7" type="Node2D" parent="."]
+visible = false
+
+[node name="Tile_10" parent="Col_7" instance=ExtResource("2_2xonm")]
+position = Vector2(525, -50)
+
+[node name="Tile_11" parent="Col_7" instance=ExtResource("2_2xonm")]
+position = Vector2(525, 50)
+
+[node name="Tile_12" parent="Col_7" instance=ExtResource("2_2xonm")]
+position = Vector2(525, 150)
+
+[node name="Tile_13" parent="Col_7" instance=ExtResource("2_2xonm")]
+position = Vector2(525, 250)
+
+[node name="Tile_14" parent="Col_7" instance=ExtResource("2_2xonm")]
+position = Vector2(525, 350)
+
+[node name="Tile_15" parent="Col_7" instance=ExtResource("2_2xonm")]
+position = Vector2(525, 450)
+
+[node name="Tile_16" parent="Col_7" instance=ExtResource("2_2xonm")]
+position = Vector2(525, 550)
+
+[node name="Tile_17" parent="Col_7" instance=ExtResource("2_2xonm")]
+position = Vector2(525, 650)
+
+[node name="Tile_18" parent="Col_7" instance=ExtResource("2_2xonm")]
+position = Vector2(525, 750)
+
+[node name="Col_8" type="Node2D" parent="."]
+visible = false
+
+[node name="Tile_00" parent="Col_8" instance=ExtResource("2_2xonm")]
+position = Vector2(600, 0)
+
+[node name="Tile_01" parent="Col_8" instance=ExtResource("2_2xonm")]
+position = Vector2(600, 100)
+
+[node name="Tile_02" parent="Col_8" instance=ExtResource("2_2xonm")]
+position = Vector2(600, 200)
+
+[node name="Tile_03" parent="Col_8" instance=ExtResource("2_2xonm")]
+position = Vector2(600, 300)
+
+[node name="Tile_04" parent="Col_8" instance=ExtResource("2_2xonm")]
+position = Vector2(600, 400)
+
+[node name="Tile_05" parent="Col_8" instance=ExtResource("2_2xonm")]
+position = Vector2(600, 500)
+
+[node name="Tile_06" parent="Col_8" instance=ExtResource("2_2xonm")]
+position = Vector2(600, 600)
+
+[node name="Tile_07" parent="Col_8" instance=ExtResource("2_2xonm")]
+position = Vector2(600, 700)
+
+[node name="Col_9" type="Node2D" parent="."]
+visible = false
+
+[node name="Tile_10" parent="Col_9" instance=ExtResource("2_2xonm")]
+position = Vector2(675, -50)
+
+[node name="Tile_11" parent="Col_9" instance=ExtResource("2_2xonm")]
+position = Vector2(675, 50)
+
+[node name="Tile_12" parent="Col_9" instance=ExtResource("2_2xonm")]
+position = Vector2(675, 150)
+
+[node name="Tile_13" parent="Col_9" instance=ExtResource("2_2xonm")]
+position = Vector2(675, 250)
+
+[node name="Tile_14" parent="Col_9" instance=ExtResource("2_2xonm")]
+position = Vector2(675, 350)
+
+[node name="Tile_15" parent="Col_9" instance=ExtResource("2_2xonm")]
+position = Vector2(675, 450)
+
+[node name="Tile_16" parent="Col_9" instance=ExtResource("2_2xonm")]
+position = Vector2(675, 550)
+
+[node name="Tile_17" parent="Col_9" instance=ExtResource("2_2xonm")]
+position = Vector2(675, 650)
+
+[node name="Tile_18" parent="Col_9" instance=ExtResource("2_2xonm")]
+position = Vector2(675, 750)

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7ltdgr3s3xil"]
+
+[ext_resource type="Script" path="res://scripts/Game.cs" id="1_fjfcu"]
+[ext_resource type="PackedScene" uid="uid://cgyqd5p3tu3bw" path="res://scenes/board.tscn" id="1_hj26e"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_fjfcu")
+
+[node name="Board" parent="." instance=ExtResource("1_hj26e")]
+position = Vector2(471, 185)
+scale = Vector2(0.5, 0.5)
