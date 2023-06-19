@@ -271,25 +271,25 @@ public partial class Board : Node2D
 		return false;
 	}
 
-	//TODO is this actually being used?
-	// public void _input(InputEvent event)
-	// {
-	// 	if (cursorTile != null && event.GetType() is InputEventMouseButton and event.pressed)
-	// 	{
-	// 		if (event.button_index == MOUSE_BUTTON_LEFT)
-	// 		{
-	// 			cursorTile.spin(Global.SpinDir.AntiClockwise);
-	// 		}
-	// 		else if (event.button_index == MOUSE_BUTTON_RIGHT)
-	// 		{
-	// 			cursorTile.spin(Global.SpinDir.Clockwise);
-	// 		}
+	public override void _Input(InputEvent @event)
+	{
+		if (CursorTile != null)
+		{
+			if (@event.IsActionPressed("spin_left"))
+			{
+				CursorTile.Spin(this, SpinDir.AntiClockwise);
+			}
+			else if (@event.IsActionPressed("spin_right"))
+			{
+				CursorTile.Spin(this, SpinDir.Clockwise);
+			}
 
-	// 		while (CheckBoard())
-	// 		{
-	// 			// just call check_board() again
-	// 		}
-	// 	}
-	// }
+			while (CheckBoard())
+			{
+				// just call check_board() again
+			}
+		}
+	}
+
 
 }
