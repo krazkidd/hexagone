@@ -6,7 +6,8 @@
 [node name="Board" type="Node2D"]
 script = ExtResource("1_xg1uy")
 
-[node name="Col_0" type="Node" parent="."]
+[node name="Col_0" type="Node2D" parent="."]
+visible = false
 
 [node name="Tile_00" parent="Col_0" instance=ExtResource("2_2xonm")]
 
@@ -31,7 +32,8 @@ position = Vector2(0, 600)
 [node name="Tile_07" parent="Col_0" instance=ExtResource("2_2xonm")]
 position = Vector2(0, 700)
 
-[node name="Col_1" type="Node" parent="."]
+[node name="Col_1" type="Node2D" parent="."]
+visible = false
 
 [node name="Tile_10" parent="Col_1" instance=ExtResource("2_2xonm")]
 position = Vector2(75, -50)
@@ -60,7 +62,8 @@ position = Vector2(75, 650)
 [node name="Tile_18" parent="Col_1" instance=ExtResource("2_2xonm")]
 position = Vector2(75, 750)
 
-[node name="Col_2" type="Node" parent="."]
+[node name="Col_2" type="Node2D" parent="."]
+visible = false
 
 [node name="Tile_20" parent="Col_2" instance=ExtResource("2_2xonm")]
 position = Vector2(150, 0)
@@ -86,7 +89,8 @@ position = Vector2(150, 600)
 [node name="Tile_07" parent="Col_2" instance=ExtResource("2_2xonm")]
 position = Vector2(150, 700)
 
-[node name="Col_3" type="Node" parent="."]
+[node name="Col_3" type="Node2D" parent="."]
+visible = false
 
 [node name="Tile_10" parent="Col_3" instance=ExtResource("2_2xonm")]
 position = Vector2(225, -50)
@@ -115,7 +119,8 @@ position = Vector2(225, 650)
 [node name="Tile_18" parent="Col_3" instance=ExtResource("2_2xonm")]
 position = Vector2(225, 750)
 
-[node name="Col_4" type="Node" parent="."]
+[node name="Col_4" type="Node2D" parent="."]
+visible = false
 
 [node name="Tile_00" parent="Col_4" instance=ExtResource("2_2xonm")]
 position = Vector2(300, 0)
@@ -141,7 +146,8 @@ position = Vector2(300, 600)
 [node name="Tile_07" parent="Col_4" instance=ExtResource("2_2xonm")]
 position = Vector2(300, 700)
 
-[node name="Col_5" type="Node" parent="."]
+[node name="Col_5" type="Node2D" parent="."]
+visible = false
 
 [node name="Tile_10" parent="Col_5" instance=ExtResource("2_2xonm")]
 position = Vector2(375, -50)
@@ -170,7 +176,8 @@ position = Vector2(375, 650)
 [node name="Tile_18" parent="Col_5" instance=ExtResource("2_2xonm")]
 position = Vector2(375, 750)
 
-[node name="Col_6" type="Node" parent="."]
+[node name="Col_6" type="Node2D" parent="."]
+visible = false
 
 [node name="Tile_00" parent="Col_6" instance=ExtResource("2_2xonm")]
 position = Vector2(450, 0)
@@ -196,7 +203,8 @@ position = Vector2(450, 600)
 [node name="Tile_07" parent="Col_6" instance=ExtResource("2_2xonm")]
 position = Vector2(450, 700)
 
-[node name="Col_7" type="Node" parent="."]
+[node name="Col_7" type="Node2D" parent="."]
+visible = false
 
 [node name="Tile_10" parent="Col_7" instance=ExtResource("2_2xonm")]
 position = Vector2(525, -50)
@@ -225,7 +233,8 @@ position = Vector2(525, 650)
 [node name="Tile_18" parent="Col_7" instance=ExtResource("2_2xonm")]
 position = Vector2(525, 750)
 
-[node name="Col_8" type="Node" parent="."]
+[node name="Col_8" type="Node2D" parent="."]
+visible = false
 
 [node name="Tile_00" parent="Col_8" instance=ExtResource("2_2xonm")]
 position = Vector2(600, 0)
@@ -251,7 +260,8 @@ position = Vector2(600, 600)
 [node name="Tile_07" parent="Col_8" instance=ExtResource("2_2xonm")]
 position = Vector2(600, 700)
 
-[node name="Col_9" type="Node" parent="."]
+[node name="Col_9" type="Node2D" parent="."]
+visible = false
 
 [node name="Tile_10" parent="Col_9" instance=ExtResource("2_2xonm")]
 position = Vector2(675, -50)
