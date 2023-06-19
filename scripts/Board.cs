@@ -20,7 +20,7 @@ public partial class Board : Node2D
 		{
 			if (IsInstanceValid(_cursorTile))
 			{
-				_cursorTile.ClearCursor();
+				_cursorTile.ClearCursor(this);
 			}
 
 			_cursorTile = value;
@@ -56,7 +56,7 @@ public partial class Board : Node2D
 
 					// since we're always on an edge as we build the board,
 					// new tiles cannot be the center of a flower
-					while (tile.IsCluster() || tile.IsPetal())
+					while (tile.IsCluster(this) || tile.IsPetal(this))
 					{
 						tile.Free();
 
@@ -121,7 +121,7 @@ public partial class Board : Node2D
 
 			tile.IsCursor = true;
 
-			tile.SetCursorNeighbors();
+			tile.SetCursorNeighbors(this);
 		};
 
 		return tile;
@@ -143,11 +143,11 @@ public partial class Board : Node2D
 				{
 					Tile tile = Board_[x][y];
 
-					if (tile.IsCluster())
+					if (tile.IsCluster(this))
 					{
 						clusters.Add(tile);
 					}
-					else if (tile.IsPistile())
+					else if (tile.IsPistile(this))
 					{
 						pistils.Add(tile);
 					}
@@ -169,14 +169,14 @@ public partial class Board : Node2D
 			Board_[tile.X][tile.Y] = null;
 
 			// save type
-			TileType type = tile.GetNeighbor(Dir.UpLeft).Type;
+			TileType type = tile.GetNeighbor(this, Dir.UpLeft).Type;
 
-			Tile neighborTopLeft = tile.GetNeighbor(Dir.UpLeft);
-			Tile neighborTop = tile.GetNeighbor(Dir.Up);
-			Tile neighborTopRight = tile.GetNeighbor(Dir.UpRight);
-			Tile neighborBottomRight = tile.GetNeighbor(Dir.DownRight);
-			Tile neighborBottom = tile.GetNeighbor(Dir.Down);
-			Tile neighborBottomLeft = tile.GetNeighbor(Dir.DownLeft);
+			Tile neighborTopLeft = tile.GetNeighbor(this, Dir.UpLeft);
+			Tile neighborTop = tile.GetNeighbor(this, Dir.Up);
+			Tile neighborTopRight = tile.GetNeighbor(this, Dir.UpRight);
+			Tile neighborBottomRight = tile.GetNeighbor(this, Dir.DownRight);
+			Tile neighborBottom = tile.GetNeighbor(this, Dir.Down);
+			Tile neighborBottomLeft = tile.GetNeighbor(this, Dir.DownLeft);
 
 			neighborTopLeft.SafeFree();
 			neighborTop.SafeFree();
