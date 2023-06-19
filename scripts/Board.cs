@@ -61,6 +61,8 @@ public partial class Board : Node2D
 					// new tiles cannot be the center of a flower
 					while (tile.IsCluster(this) || tile.IsPetal(this))
 					{
+						GD.PushWarning("New tile must be recreated.");
+
 						tile.Free();
 
 						tile = CreateTile(TileType.Normal, x, y);
