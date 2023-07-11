@@ -54,6 +54,7 @@ quit={
 
 [rendering]
 
+renderer/rendering_method="gl_compatibility"
 environment/defaults/default_environment="res://default_env.tres"
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
