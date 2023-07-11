@@ -1,0 +1,104 @@
+{
+	"categories": [
+		{
+			"uuid": "da83a95d-2890-46d3-ba88-9e63d8da0a65",
+			"title": "Task",
+			"color": "70bafa"
+		},
+		{
+			"uuid": "d7f3156e-deab-4272-904a-646df391c36d",
+			"title": "Bug",
+			"color": "e32007"
+		},
+		{
+			"uuid": "2bf2b255-67ba-4e67-9e39-bd31cb5dd780",
+			"title": "Idea",
+			"color": "ff9900"
+		},
+		{
+			"uuid": "8098e19b-3628-4202-bf0e-6c124903a6bc",
+			"title": "Polish",
+			"color": "ffff29"
+		},
+		{
+			"uuid": "17f84e7a-1483-467f-9416-b50fe05877cc",
+			"title": "Other",
+			"color": "9895aa"
+		}
+	],
+	"stages": [
+		{
+			"uuid": "2672f96a-9194-47de-b5a1-7961b242be5a",
+			"title": "Todo",
+			"tasks": []
+		},
+		{
+			"uuid": "ea9a30db-7c6c-4a78-9aa3-578a9c774714",
+			"title": "Doing",
+			"tasks": []
+		},
+		{
+			"uuid": "6aa33cc0-55c2-433b-ae66-146963a41273",
+			"title": "Done",
+			"tasks": []
+		},
+		{
+			"uuid": "ea59d79b-f8bf-487b-82fd-1ae4113af119",
+			"title": "Gameplay Ideas",
+			"tasks": []
+		},
+		{
+			"uuid": "dc0fbd22-1581-470e-8fac-bd737d4d7bd6",
+			"title": "Expedite",
+			"tasks": []
+		},
+		{
+			"uuid": "a2075292-05ae-4a5a-862c-065770c5f9d4",
+			"title": "Expedite",
+			"tasks": []
+		},
+		{
+			"uuid": "86426af1-d49f-4980-af92-7c39d92ddf80",
+			"title": "Other",
+			"tasks": [
+				"c5879cfd-6355-4784-87ea-075cb318daf7",
+				"c9a1e1f0-92cc-4b67-903e-adebf51ed9d5"
+			]
+		}
+	],
+	"tasks": [
+		{
+			"uuid": "c5879cfd-6355-4784-87ea-075cb318daf7",
+			"title": "Consider using TileMap for the hex board",
+			"description": "https://old.reddit.com/r/godot/comments/14vt655/finding_the_right_neighbors_of_a_hex_field/jredti9/",
+			"category": "17f84e7a-1483-467f-9416-b50fe05877cc",
+			"steps": []
+		},
+		{
+			"uuid": "c9a1e1f0-92cc-4b67-903e-adebf51ed9d5",
+			"title": "Try a UI toolkit",
+			"description": "See https://github.com/MrJul/Estragonia",
+			"category": "17f84e7a-1483-467f-9416-b50fe05877cc",
+			"steps": []
+		}
+	],
+	"layout": {
+		"columns": [
+			[
+				"ea59d79b-f8bf-487b-82fd-1ae4113af119",
+				"86426af1-d49f-4980-af92-7c39d92ddf80"
+			],
+			[
+				"a2075292-05ae-4a5a-862c-065770c5f9d4",
+				"2672f96a-9194-47de-b5a1-7961b242be5a"
+			],
+			[
+				"dc0fbd22-1581-470e-8fac-bd737d4d7bd6",
+				"ea9a30db-7c6c-4a78-9aa3-578a9c774714"
+			],
+			[
+				"6aa33cc0-55c2-433b-ae66-146963a41273"
+			]
+		]
+	}
+}
