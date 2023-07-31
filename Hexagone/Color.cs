@@ -6,12 +6,12 @@ namespace Hexagone;
 public static class Color
 {
 
-    public static readonly Godot.Color Red = new Godot.Color("#dc322f");
-    public static readonly Godot.Color Magenta = new Godot.Color("#d33682");
-    public static readonly Godot.Color Yellow = new Godot.Color("#b58900");
-    public static readonly Godot.Color Green = new Godot.Color("#859900");
-    public static readonly Godot.Color Blue = new Godot.Color("#6c71c4");
-    public static readonly Godot.Color Purple = new Godot.Color("#6c71c4");
+    public static readonly Godot.Color Red = new("#dc322f");
+    public static readonly Godot.Color Magenta = new("#d33682");
+    public static readonly Godot.Color Yellow = new("#b58900");
+    public static readonly Godot.Color Green = new("#859900");
+    public static readonly Godot.Color Blue = new("#6c71c4");
+    public static readonly Godot.Color Purple = new("#6c71c4");
 
     public static Godot.Color GetColor(TileColor tileColor)
     {
