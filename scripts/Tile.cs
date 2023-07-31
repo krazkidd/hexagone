@@ -92,11 +92,11 @@ public partial class Tile : Area2D
 		int otherX = X;
 		int otherY = Y;
 
-		if (dir == Dir.UpLeft || dir == Dir.DownLeft)
+		if (dir is Dir.UpLeft or Dir.DownLeft)
 		{
 			otherX -= 1;
 		}
-		else if (dir == Dir.UpRight || dir == Dir.DownRight)
+		else if (dir is Dir.UpRight or Dir.DownRight)
 		{
 			otherX += 1;
 		}
@@ -107,14 +107,14 @@ public partial class Tile : Area2D
 			{
 				otherY -= 1;
 			}
-			else if (dir == Dir.DownLeft || dir == Dir.Down || dir == Dir.DownRight)
+			else if (dir is Dir.DownLeft or Dir.Down or Dir.DownRight)
 			{
 				otherY += 1;
 			}
 		}
 		else
 		{
-			if (dir == Dir.UpLeft || dir == Dir.Up || dir == Dir.UpRight)
+			if (dir is Dir.UpLeft or Dir.Up or Dir.UpRight)
 			{
 				otherY -= 1;
 			}
