@@ -13,9 +13,8 @@ public static class Color
     public static readonly Godot.Color Blue = new("#6c71c4");
     public static readonly Godot.Color Purple = new("#6c71c4");
 
-    public static Godot.Color GetColor(TileColor tileColor)
-    {
-        return tileColor switch
+    public static Godot.Color GetColor(TileColor tileColor) =>
+        tileColor switch
         {
             TileColor.Red => Red,
             TileColor.Magenta => Magenta,
@@ -26,6 +25,5 @@ public static class Color
             _ => throw new ArgumentException("Invalid TileColor", "tileColor"),
             //TODO better error message
         };
-    }
 
 }

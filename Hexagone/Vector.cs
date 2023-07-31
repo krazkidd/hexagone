@@ -17,9 +17,8 @@ public static class Vector
     public static readonly Vector2 Down = Vector2.Down;
     public static readonly Vector2 DownRight = new Vector2(X, Y).Normalized();
 
-    public static Vector2 GetDirVector(Dir dir)
-    {
-        return dir switch
+    public static Vector2 GetDirVector(Dir dir) =>
+        dir switch
         {
             Dir.UpLeft => UpLeft,
             Dir.Up => Up,
@@ -30,6 +29,5 @@ public static class Vector
             _ => throw new ArgumentException("Invalid Dir", "dir"),
             //TODO better error message
         };
-    }
 
 }
