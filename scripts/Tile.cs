@@ -72,13 +72,11 @@ public partial class Tile : Area2D
 	private Polygon2D face;
 	private Polygon2D back;
 
-	public void SetXY(int xval, int yval)
-	{
+    public void SetXY(int xval, int yval) => 
 		Position = new Vector2(xval * 75.0f, yval * 100.0f - 50.0f * (xval % 2));
-	}
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
 	{
 		face = GetNode<Polygon2D>("Face");
 		back = GetNode<Polygon2D>("Back");
@@ -171,13 +169,11 @@ public partial class Tile : Area2D
 		return Dir.Unknown;
 	}
 
-	public bool IsNeighbor(Board board, Tile tile)
-	{
-		return FindNeighbor(board, tile) != Dir.Unknown;
-	}
+    public bool IsNeighbor(Board board, Tile tile) => 
+		FindNeighbor(board, tile) != Dir.Unknown;
 
-	//TODO can pass in startDir param and then have two loops or osmething
-	public Tile GetFirstNeighbor(Board board)
+    //TODO can pass in startDir param and then have two loops or osmething
+    public Tile GetFirstNeighbor(Board board)
 	{
 		Tile tile = GetNeighbor(board, Dir.Up);
 		if (tile != null)

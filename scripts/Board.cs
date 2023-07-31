@@ -80,14 +80,11 @@ public partial class Board : Node2D
 		}
 	}
 
-	// Whether or not the given tile coordinates on the board is
-	// *supposed* to be empty, because the board columns are staggered.
-	public bool IsEmptySpot(int x, int y)
-	{
-		return (x % 2 == 0) && (y == 9 - 1);
-	}
+    // Whether or not the given tile coordinates on the board is
+    // *supposed* to be empty, because the board columns are staggered.
+    public bool IsEmptySpot(int x, int y) => (x % 2 == 0) && (y == 9 - 1);
 
-	public Tile CreateTile(TileType tiletype, int x, int y)
+    public Tile CreateTile(TileType tiletype, int x, int y)
 	{
 		Tile tile = null;
 
