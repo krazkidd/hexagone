@@ -1,281 +1,282 @@
 using Godot;
+using Hexagone;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Hexagone;
-
 public partial class Board : Node2D
 {
+    private Tile _cursorTile;
 
-	private Tile _cursorTile;
+    public Tile CursorTile
+    {
+        get
+        {
+            return _cursorTile;
+        }
+        set
+        {
+            if (IsInstanceValid(_cursorTile))
+            {
+                _cursorTile.ClearCursor(this);
+            }
 
-	public Tile CursorTile
-	{
-		get
-		{
-			return _cursorTile;
-		}
-		set
-		{
-			if (IsInstanceValid(_cursorTile))
-			{
-				_cursorTile.ClearCursor(this);
-			}
+            value.IsCursor = true;
+            value.SetCursorNeighbors(this);
 
-			value.IsCursor = true;
-			value.SetCursorNeighbors(this);
+            _cursorTile = value;
+        }
+    }
 
-			_cursorTile = value;
-		}
-	}
+    public Tile[][] Board_;
 
-	public Tile[][] Board_;
+    private readonly PackedScene tileScene = GD.Load<PackedScene>("res://scenes/tile.tscn");
+    private readonly PackedScene flowerTileScene = GD.Load<PackedScene>("res://scenes/flower_tile.tscn");
 
-	private readonly PackedScene tileScene = GD.Load<PackedScene>("res://scenes/tile.tscn");
-	private readonly PackedScene flowerTileScene = GD.Load<PackedScene>("res://scenes/flower_tile.tscn");
+    public Board()
+    {
+        Board_ = new Tile[10][];
 
-	public Board()
-	{
-		Board_ = new Tile[10][];
+        foreach (int x in Enumerable.Range(0, Board_.Length))
+        {
+            Board_[x] = new Tile[9];
 
-		foreach (int x in Enumerable.Range(0, Board_.Length))
-		{
-			Board_[x] = new Tile[9];
+            foreach (int y in Enumerable.Range(0, Board_[x].Length))
+            {
+                Board_[x][y] = null;
+            }
+        }
 
-			foreach (int y in Enumerable.Range(0, Board_[x].Length))
-			{
-				Board_[x][y] = null;
-			}
-		}
+        foreach (int x in Enumerable.Range(0, Board_.Length))
+        {
+            foreach (int y in Enumerable.Range(0, Board_[x].Length))
+            {
+                if (!IsEmptySpot(x, y))
+                {
+                    Tile tile = CreateTile(TileType.Normal, x, y);
 
-		foreach (int x in Enumerable.Range(0, Board_.Length))
-		{
-			foreach (int y in Enumerable.Range(0, Board_[x].Length))
-			{
-				if (!IsEmptySpot(x, y))
-				{
-					Tile tile = CreateTile(TileType.Normal, x, y);
+                    // since we're always on an edge as we build the board,
+                    // new tiles cannot be the center of a flower
+                    while (tile.IsCluster(this) || tile.IsPetal(this))
+                    {
+                        GD.PushWarning("New tile must be recreated.");
 
-					// since we're always on an edge as we build the board,
-					// new tiles cannot be the center of a flower
-					while (tile.IsCluster(this) || tile.IsPetal(this))
-					{
-						GD.PushWarning("New tile must be recreated.");
+                        tile.Free();
 
-						tile.Free();
+                        tile = CreateTile(TileType.Normal, x, y);
+                    }
 
-						tile = CreateTile(TileType.Normal, x, y);
-					}
+                    Board_[x][y] = tile;
 
-					Board_[x][y] = tile;
-
-					AddChild(tile);
-				}
-				else
-				{
-					Board_[x][y] = null;
-				}
-			}
-		}
-	}
+                    AddChild(tile);
+                }
+                else
+                {
+                    Board_[x][y] = null;
+                }
+            }
+        }
+    }
 
     // Whether or not the given tile coordinates on the board is
     // *supposed* to be empty, because the board columns are staggered.
     public bool IsEmptySpot(int x, int y) => (x % 2 == 0) && (y == 9 - 1);
 
     public Tile CreateTile(TileType tiletype, int x, int y)
-	{
-		Tile tile = null;
+    {
+        Tile tile = null;
 
-		switch (tiletype)
-		{
-			case TileType.Normal:
-				tile = tileScene.Instantiate<Tile>();
+        switch (tiletype)
+        {
+            case TileType.Normal:
+                tile = tileScene.Instantiate<Tile>();
 
-				break;
-			case TileType.Flower:
-				tile = flowerTileScene.Instantiate<FlowerTile>();
+                break;
 
-				break;
-			case TileType.Pearl:
-				// TODO
+            case TileType.Flower:
+                tile = flowerTileScene.Instantiate<FlowerTile>();
 
-				break;
-		}
+                break;
 
-		tile.X = x;
-		tile.Y = y;
+            case TileType.Pearl:
+                // TODO
 
-		tile.Color = Hexagone.Color.GetColor((TileColor)(new Random().Next() % 6));
+                break;
+        }
 
-		tile.MouseEntered += () => CursorTile = tile;
+        tile.X = x;
+        tile.Y = y;
 
-		return tile;
-	}
+        tile.Color = Hexagone.Color.GetColor((TileColor)(new Random().Next() % 6));
 
-	public bool CheckBoard()
-	{
-		//TODO for clusters, just need to test the ones that moved;
-		//     for pistils, just need to test their neighbors
+        tile.MouseEntered += () => CursorTile = tile;
 
-		IList<Tile> clusters = new List<Tile>();
-		IList<Tile> pistils = new List<Tile>();
+        return tile;
+    }
 
-		foreach (int x in Enumerable.Range(0, Board_.Length))
-		{
-			foreach (int y in Enumerable.Range(0, Board_[x].Length))
-			{
-				if (!IsEmptySpot(x, y))
-				{
-					Tile tile = Board_[x][y];
+    public bool CheckBoard()
+    {
+        //TODO for clusters, just need to test the ones that moved;
+        //     for pistils, just need to test their neighbors
 
-					if (tile.IsCluster(this))
-					{
-						clusters.Add(tile);
-					}
-					else if (tile.IsPistile(this))
-					{
-						pistils.Add(tile);
-					}
-				}
-			}
-		}
+        IList<Tile> clusters = new List<Tile>();
+        IList<Tile> pistils = new List<Tile>();
 
-		foreach (Tile tile in clusters)
-		{
-			tile.SafeFree();
+        foreach (int x in Enumerable.Range(0, Board_.Length))
+        {
+            foreach (int y in Enumerable.Range(0, Board_[x].Length))
+            {
+                if (!IsEmptySpot(x, y))
+                {
+                    Tile tile = Board_[x][y];
 
-			Board_[tile.X][tile.Y] = null;
-		}
+                    if (tile.IsCluster(this))
+                    {
+                        clusters.Add(tile);
+                    }
+                    else if (tile.IsPistile(this))
+                    {
+                        pistils.Add(tile);
+                    }
+                }
+            }
+        }
 
-		foreach (Tile tile in pistils)
-		{
-			tile.SafeFree();
+        foreach (Tile tile in clusters)
+        {
+            tile.SafeFree();
 
-			Board_[tile.X][tile.Y] = null;
+            Board_[tile.X][tile.Y] = null;
+        }
 
-			// save type
-			TileType type = tile.GetNeighbor(this, Dir.UpLeft).Type;
+        foreach (Tile tile in pistils)
+        {
+            tile.SafeFree();
 
-			Tile neighborTopLeft = tile.GetNeighbor(this, Dir.UpLeft);
-			Tile neighborTop = tile.GetNeighbor(this, Dir.Up);
-			Tile neighborTopRight = tile.GetNeighbor(this, Dir.UpRight);
-			Tile neighborBottomRight = tile.GetNeighbor(this, Dir.DownRight);
-			Tile neighborBottom = tile.GetNeighbor(this, Dir.Down);
-			Tile neighborBottomLeft = tile.GetNeighbor(this, Dir.DownLeft);
+            Board_[tile.X][tile.Y] = null;
 
-			neighborTopLeft.SafeFree();
-			neighborTop.SafeFree();
-			neighborTopRight.SafeFree();
-			neighborBottomRight.SafeFree();
-			neighborBottom.SafeFree();
-			neighborBottomLeft.SafeFree();
+            // save type
+            TileType type = tile.GetNeighbor(this, Dir.UpLeft).Type;
 
-			Board_[neighborTopLeft.X][neighborTopLeft.Y] = null;
-			Board_[neighborTop.X][neighborTop.Y] = null;
-			Board_[neighborTopRight.X][neighborTopRight.Y] = null;
-			Board_[neighborBottomRight.X][neighborBottomRight.Y] = null;
-			Board_[neighborBottom.X][neighborBottom.Y] = null;
-			Board_[neighborBottomLeft.X][neighborBottomLeft.Y] = null;
+            Tile neighborTopLeft = tile.GetNeighbor(this, Dir.UpLeft);
+            Tile neighborTop = tile.GetNeighbor(this, Dir.Up);
+            Tile neighborTopRight = tile.GetNeighbor(this, Dir.UpRight);
+            Tile neighborBottomRight = tile.GetNeighbor(this, Dir.DownRight);
+            Tile neighborBottom = tile.GetNeighbor(this, Dir.Down);
+            Tile neighborBottomLeft = tile.GetNeighbor(this, Dir.DownLeft);
 
-			switch (type)
-			{
-				case TileType.Pearl:
-					//TODO game over
+            neighborTopLeft.SafeFree();
+            neighborTop.SafeFree();
+            neighborTopRight.SafeFree();
+            neighborBottomRight.SafeFree();
+            neighborBottom.SafeFree();
+            neighborBottomLeft.SafeFree();
 
-					break;
-				case TileType.Flower:
-					Tile newTile = CreateTile(TileType.Pearl, tile.X, tile.Y);
+            Board_[neighborTopLeft.X][neighborTopLeft.Y] = null;
+            Board_[neighborTop.X][neighborTop.Y] = null;
+            Board_[neighborTopRight.X][neighborTopRight.Y] = null;
+            Board_[neighborBottomRight.X][neighborBottomRight.Y] = null;
+            Board_[neighborBottom.X][neighborBottom.Y] = null;
+            Board_[neighborBottomLeft.X][neighborBottomLeft.Y] = null;
 
-					Board_[tile.X][tile.Y] = newTile;
+            switch (type)
+            {
+                case TileType.Pearl:
+                    //TODO game over
 
-					// add to scene tree
-					AddChild(newTile);
+                    break;
 
-					break;
-				case TileType.Normal:
-					Tile newTile2 = CreateTile(TileType.Flower, tile.X, tile.Y);
+                case TileType.Flower:
+                    Tile newTile = CreateTile(TileType.Pearl, tile.X, tile.Y);
 
-					Board_[tile.X][tile.Y] = newTile2;
+                    Board_[tile.X][tile.Y] = newTile;
 
-					AddChild(newTile2);
+                    // add to scene tree
+                    AddChild(newTile);
 
-					break;
-			}
-		}
+                    break;
 
-		if (clusters.Any() || pistils.Any())
-		{
-			//TODO review this logic when not tired
+                case TileType.Normal:
+                    Tile newTile2 = CreateTile(TileType.Flower, tile.X, tile.Y);
 
-			foreach (int x in Enumerable.Range(0, Board_.Length))
-			{
-				int ptrY = Board_[x].Length - 1;
+                    Board_[tile.X][tile.Y] = newTile2;
 
-				while (IsEmptySpot(x, ptrY))
-				{
-					ptrY -= 1;
-				}
+                    AddChild(newTile2);
 
-				for (int y = ptrY; y >= 0; y--)
-				{
-					while (Board_[x][ptrY] == null && ptrY >= 0)
-					{
-						ptrY -= 1;
-					}
+                    break;
+            }
+        }
 
-					if (y == ptrY)
-					{
-						ptrY -= 1;
-					}
-					else if (ptrY >= 0)
-					{
-						Board_[x][y] = Board_[x][ptrY];
+        if (clusters.Any() || pistils.Any())
+        {
+            //TODO review this logic when not tired
 
-						Board_[x][y].X = x;
-						Board_[x][y].Y = y;
-						Board_[x][y].Position = new Vector2(x * 1.5f, y * 2.0f - 1.0f * (x % 2));
+            foreach (int x in Enumerable.Range(0, Board_.Length))
+            {
+                int ptrY = Board_[x].Length - 1;
 
-						Board_[x][ptrY] = null;
+                while (IsEmptySpot(x, ptrY))
+                {
+                    ptrY -= 1;
+                }
 
-						ptrY -= 1;
-					}
-					else
-					{
-						Tile tile = CreateTile(TileType.Normal, x, y);
+                for (int y = ptrY; y >= 0; y--)
+                {
+                    while (Board_[x][ptrY] == null && ptrY >= 0)
+                    {
+                        ptrY -= 1;
+                    }
 
-						Board_[x][y] = tile;
+                    if (y == ptrY)
+                    {
+                        ptrY -= 1;
+                    }
+                    else if (ptrY >= 0)
+                    {
+                        Board_[x][y] = Board_[x][ptrY];
 
-						AddChild(tile);
-					}
-				}
-			}
+                        Board_[x][y].X = x;
+                        Board_[x][y].Y = y;
+                        Board_[x][y].Position = new Vector2(x * 1.5f, y * 2.0f - 1.0f * (x % 2));
 
-			return true;
-		}
+                        Board_[x][ptrY] = null;
 
-		return false;
-	}
+                        ptrY -= 1;
+                    }
+                    else
+                    {
+                        Tile tile = CreateTile(TileType.Normal, x, y);
 
-	public override void _Input(InputEvent @event)
-	{
-		if (CursorTile != null)
-		{
-			if (@event.IsActionPressed("spin_left"))
-			{
-				CursorTile.Spin(this, SpinDir.AntiClockwise);
-			}
-			else if (@event.IsActionPressed("spin_right"))
-			{
-				CursorTile.Spin(this, SpinDir.Clockwise);
-			}
+                        Board_[x][y] = tile;
 
-			while (CheckBoard())
-			{
-				// just call check_board() again
-			}
-		}
-	}
+                        AddChild(tile);
+                    }
+                }
+            }
 
+            return true;
+        }
+
+        return false;
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        if (CursorTile != null)
+        {
+            if (@event.IsActionPressed("spin_left"))
+            {
+                CursorTile.Spin(this, SpinDir.AntiClockwise);
+            }
+            else if (@event.IsActionPressed("spin_right"))
+            {
+                CursorTile.Spin(this, SpinDir.Clockwise);
+            }
+
+            while (CheckBoard())
+            {
+                // just call check_board() again
+            }
+        }
+    }
 }

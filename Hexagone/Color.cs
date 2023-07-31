@@ -5,7 +5,6 @@ namespace Hexagone;
 
 public static class Color
 {
-
     public static readonly Godot.Color Red = new("#dc322f");
     public static readonly Godot.Color Magenta = new("#d33682");
     public static readonly Godot.Color Yellow = new("#b58900");
@@ -25,5 +24,4 @@ public static class Color
             _ => throw new ArgumentException("Invalid TileColor", "tileColor"),
             //TODO better error message
         };
-
 }

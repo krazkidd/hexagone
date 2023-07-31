@@ -5,7 +5,6 @@ namespace Hexagone;
 
 public static class Vector
 {
-
     public static readonly float X = 0.5f * Mathf.Cos(Mathf.DegToRad(30)) / Mathf.Tan(Mathf.DegToRad(30)); // Y / Mathf.Tan(30)
     public static readonly float Y = 0.5f * Mathf.Cos(Mathf.DegToRad(30));
 
@@ -29,5 +28,4 @@ public static class Vector
             _ => throw new ArgumentException("Invalid Dir", "dir"),
             //TODO better error message
         };
-
 }
