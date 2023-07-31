@@ -19,25 +19,17 @@ public static class Vector
 
     public static Vector2 GetDirVector(Dir dir)
     {
-        switch (dir)
+        return dir switch
         {
-            case Dir.UpLeft:
-                return UpLeft;
-            case Dir.Up:
-                return Up;
-            case Dir.UpRight:
-                return UpRight;
-            case Dir.DownLeft:
-                return DownLeft;
-            case Dir.DownRight:
-                return DownRight;
-            case Dir.Down:
-                return Down;
-
-            default:
-                //TODO better error message
-                throw new ArgumentException("Invalid Dir", "dir");
-        }
+            Dir.UpLeft => UpLeft,
+            Dir.Up => Up,
+            Dir.UpRight => UpRight,
+            Dir.DownLeft => DownLeft,
+            Dir.DownRight => DownRight,
+            Dir.Down => Down,
+            _ => throw new ArgumentException("Invalid Dir", "dir"),
+            //TODO better error message
+        };
     }
 
 }

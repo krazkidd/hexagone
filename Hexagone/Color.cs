@@ -15,25 +15,17 @@ public static class Color
 
     public static Godot.Color GetColor(TileColor tileColor)
     {
-        switch (tileColor)
+        return tileColor switch
         {
-            case TileColor.Red:
-                return Red;
-            case TileColor.Magenta:
-                return Magenta;
-            case TileColor.Yellow:
-                return Yellow;
-            case TileColor.Green:
-                return Green;
-            case TileColor.Blue:
-                return Blue;
-            case TileColor.Purple:
-                return Purple;
-
-            default:
-                //TODO better error message
-                throw new ArgumentException("Invalid TileColor", "tileColor");
-        }
+            TileColor.Red => Red,
+            TileColor.Magenta => Magenta,
+            TileColor.Yellow => Yellow,
+            TileColor.Green => Green,
+            TileColor.Blue => Blue,
+            TileColor.Purple => Purple,
+            _ => throw new ArgumentException("Invalid TileColor", "tileColor"),
+            //TODO better error message
+        };
     }
 
 }
