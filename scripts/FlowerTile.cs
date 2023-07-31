@@ -1,6 +1,3 @@
-using Godot;
-using System;
-
 using Hexagone;
 
 public partial class FlowerTile : Tile
